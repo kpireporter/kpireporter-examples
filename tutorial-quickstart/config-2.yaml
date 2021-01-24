@@ -5,9 +5,8 @@ datasources:
     my_db:
         plugin: mysql
         args:
-            host: tutorial_mysql
-            user: ${DATABASE_USER}
-            password: ${DATABASE_PASSWORD}
+            host: localhost
+            user: ${NB_USER}
             
 views:
     num_users:
@@ -28,5 +27,3 @@ views:
 outputs:
     html:
         plugin: static
-        args:
-            output_dir: /out

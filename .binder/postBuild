@@ -1,3 +1,26 @@
 #!/usr/bin/env bash
+set -e -u -o pipefail
 
 python -m bash_kernel.install
+
+echo "Configuring MySQL"
+mkdir -p /tmp/mysql
+cat >~/.my.cnf <<MY_CNF
+[mysqld]
+datadir = /tmp/mysql
+log-error = /tmp/mysql_error.log
+socket = /tmp/mysql.sock
+pid-file = /tmp/mysql.pid
+[client]
+socket = /tmp/mysql.sock
+MY_CNF
+mysqld_safe --initialize-insecure
+mysqld_safe &
+echo "Waiting for MySQL to start"
+while [[ ! -f /tmp/mysql.pid ]]; do sleep 1; done
+echo "Creating local MySQL user"
+mysql -u root <<SQL
+create user '$NB_USER'@'localhost';
+grant all privileges on *.* to '$NB_USER'@'localhost';
+SQL
+pkill -KILL mysqld

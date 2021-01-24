@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS tutorial;
+
+DROP TABLE IF EXISTS tutorial.new_users;
 CREATE TABLE tutorial.new_users (
   `date` DATETIME NOT NULL,
   num_new_users INT DEFAULT 0
