@@ -6,7 +6,7 @@ python -m bash_kernel.install
 echo "Configuring MySQL"
 mkdir -p /tmp/mysql
 cat >~/.my.cnf <<MY_CNF
-[mysqld]
+[server]
 datadir = /tmp/mysql
 log-error = /tmp/mysql_error.log
 socket = /tmp/mysql.sock
