@@ -1,0 +1,12 @@
+{
+    "base_template": "markdown",
+    "preprocessors": {
+        "100-remove": {
+            "type": "nbconvert.preprocessors.TagRemovePreprocessor",
+            "remove_cell_tags": [
+                "remove_cell"
+            ],
+            "enabled": true
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{%- extends 'markdown/index.md.j2' %}
+
+{% block stream %}
+<details>
+  <summary>View output</summary>
+  <pre>
+
+  {{- output.text -}}
+
+  </pre>
+</details>
+{% endblock stream %}

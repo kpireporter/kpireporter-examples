@@ -12,6 +12,5 @@ convert: build
 	mkdir -p _build
 	docker run --rm -it -v $(PWD):/work -w /work \
 		kpireporter-examples jupyter nbconvert \
-		--TagRemovePreprocessor.enabled=True \
-		--TagRemovePreprocessor.remove_cell_tags remove_cell \
-		--to markdown --output-dir _build */*.ipynb
+		--to markdown --output-dir _build --template nbconvert/templates/collapse \
+		*/*.ipynb
