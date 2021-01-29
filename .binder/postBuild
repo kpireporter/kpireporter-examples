@@ -30,3 +30,5 @@ create user '$NB_USER'@'localhost';
 grant all privileges on *.* to '$NB_USER'@'localhost';
 SQL
 pkill -KILL mysqld
+# Cleanup pid file manually
+rm /tmp/mysql.pid
