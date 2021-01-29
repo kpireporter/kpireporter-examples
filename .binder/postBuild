@@ -20,8 +20,8 @@ socket = /tmp/mysql.sock
 [client]
 socket = /tmp/mysql.sock
 MY_CNF
-mysqld_safe --initialize-insecure
-mysqld_safe &
+mysqld_safe --initialize-insecure -S /tmp/mysql.sock
+mysqld_safe -S /tmp/mysql.sock &
 echo "Waiting for MySQL to start"
 while [[ ! -f /tmp/mysql.pid ]]; do sleep 1; done
 echo "Creating local MySQL user"
