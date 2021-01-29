@@ -6,8 +6,8 @@ datasources:
         plugin: mysql
         args:
             host: localhost
-            user: ${NB_USER}
-            
+            user: ${USER}
+
 views:
     num_users:
         cols: 4
@@ -23,7 +23,7 @@ views:
         args:
             datasource: my_db
             query: select sum(num_new_users) from tutorial.new_users
-            
+
 outputs:
     html:
         plugin: static

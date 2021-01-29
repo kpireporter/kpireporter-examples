@@ -6,8 +6,8 @@ datasources:
         plugin: mysql
         args:
             host: localhost
-            user: ${NB_USER}
-            
+            user: ${USER}
+
 views:
     num_users:
         plugin: plot
@@ -15,7 +15,7 @@ views:
             datasource: my_db
             query: select * from tutorial.new_users
             kind: bar
-            
+
 outputs:
     html:
         plugin: static
