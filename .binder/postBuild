@@ -11,6 +11,12 @@ datadir = /tmp/mysql
 log-error = /tmp/mysql_error.log
 socket = /tmp/mysql.sock
 pid-file = /tmp/mysql.pid
+# Specify as well in mysqld/mysql for distros
+# that for some reason don't read [server]
+[mysqld]
+socket = /tmp/mysql.sock
+[mysql]
+socket = /tmp/mysql.sock
 [client]
 socket = /tmp/mysql.sock
 MY_CNF
