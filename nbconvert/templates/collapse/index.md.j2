@@ -1,5 +1,20 @@
 {%- extends 'markdown/index.md.j2' %}
 
+{% block header %}
+<div class="binder-launch">
+  <p>
+    This tutorial is interactive, and you can open it in a live web environment to try
+    it out for yourself, without installing anything on your machine! Click here
+    to proceed: <a href="https://mybinder.org/v2/gh/kpireporter/kpireporter-examples/HEAD?filepath={{ resources.metadata.path }}%2F{{ resources.metadata.name }}.ipynb" rel="noopener noreferrer" target="_blank">
+      {%- raw -%}
+      {% asset binder_badge.svg %}
+      {%- endraw -%}
+    </a>
+  </p>
+</div>
+
+{% endblock %}
+
 {% block stream %}
 <details>
   <summary>View output</summary>
