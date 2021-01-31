@@ -1,2 +1,4 @@
 bash_kernel
 kpireport[all]
+# Ensure we have PNG output support
+kpireport-static>=0.1.0
