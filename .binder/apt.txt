@@ -1,2 +1,4 @@
+fontconfig
 mysql-server
-wkhtmltoimage
+ttf-mscorefonts-installer
+wkhtmltopdf

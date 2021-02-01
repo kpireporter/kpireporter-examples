@@ -32,3 +32,6 @@ SQL
 pkill -KILL mysqld
 # Cleanup pid file manually
 rm /tmp/mysql.pid
+
+echo "Rebuilding font cache"
+fc-cache -f -v

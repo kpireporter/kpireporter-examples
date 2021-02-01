@@ -17,5 +17,11 @@ views:
             kind: bar
 
 outputs:
+    png:
+        plugin: static
+        args:
+            output_format: png
     html:
         plugin: static
+        args:
+            output_format: html

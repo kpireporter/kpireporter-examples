@@ -23,7 +23,21 @@ views:
         args:
             datasource: my_db
             query: select sum(num_new_users) from tutorial.new_users
+    users_over_time:
+        title: Users over time
+        plugin: plot
+        args:
+            datasource: my_db
+            query: |
+                select `date`, sum(num_new_users) over (order by `date`) as total_users
+                from tutorial.new_users
 
 outputs:
+    png:
+        plugin: static
+        args:
+            output_format: png
     html:
         plugin: static
+        args:
+            output_format: html
