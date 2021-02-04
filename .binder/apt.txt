@@ -2,3 +2,4 @@ fontconfig
 mysql-server
 ttf-mscorefonts-installer
 wkhtmltopdf
+xvfb
