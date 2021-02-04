@@ -29,15 +29,19 @@ views:
         args:
             datasource: my_db
             query: |
-                select `date`, sum(num_new_users) over (order by `date`) as total_users
-                from tutorial.new_users
+                select `date`, (
+                    select sum(num_new_users)
+                    from tutorial.new_users u2 
+                    where u2.`date` < u1.`date`
+                ) as total_users
+                from tutorial.new_users u1
 
 outputs:
-    png:
-        plugin: static
-        args:
-            output_format: png
     html:
         plugin: static
         args:
             output_format: html
+    png:
+        plugin: static
+        args:
+            output_format: png
