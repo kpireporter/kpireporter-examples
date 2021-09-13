@@ -31,7 +31,9 @@ grant all privileges on *.* to '$NB_USER'@'localhost';
 SQL
 pkill -KILL mysqld
 # Cleanup pid file manually
-rm /tmp/mysql.pid
+rm -f /tmp/mysql.pid
+# Cleanup socket lockfile manually
+rm -r /tmp/mysql.sock.lock
 
 echo "Rebuilding font cache"
 fc-cache -f -v
