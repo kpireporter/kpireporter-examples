@@ -13,4 +13,4 @@ convert: build
 	docker run --rm -it -v $(PWD):/work -w /work \
 		kpireporter-examples jupyter nbconvert \
 		--to markdown --output-dir _build --template nbconvert/templates/collapse \
-		*/*.ipynb
+		tutorials/*/*.ipynb
