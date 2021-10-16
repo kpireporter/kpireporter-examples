@@ -8,7 +8,7 @@ services:
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/jenkins_api_mock.json
     volumes:
       - type: bind
-        source: ./datasources/jenkins
+        source: ./fixtures/jenkins
         target: /config
         read_only: True
     command: -serverPort 8080
@@ -22,7 +22,7 @@ services:
       MYSQL_ROOT_PASSWORD: root_pass
     volumes:
       - type: bind
-        source: ./datasources/mysql
+        source: ./fixtures/mysql
         target: /docker-entrypoint-initdb.d
         read_only: True
 
@@ -32,7 +32,7 @@ services:
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/prometheus_api_mock.json
     volumes:
       - type: bind
-        source: ./datasources/prometheus
+        source: ./fixtures/prometheus
         target: /config
         read_only: True
     command: -serverPort 9090
@@ -48,7 +48,7 @@ services:
       SERVICES: s3
     volumes:
       - type: bind
-        source: ./aws
+        source: ./fixtures/aws
         target: /docker-entrypoint-initaws.d
         read_only: True
 
@@ -62,6 +62,9 @@ services:
     ports:
       - "127.0.0.1:8080:80"
 
+  waiter:
+    image: willwill/wait-for-it
+
   kpireport:
     image: ${DOCKER_IMAGE}:${DOCKER_TAG}
     stdin_open: True
@@ -69,8 +72,12 @@ services:
     env_file: .env
     volumes:
       - type: bind
-        source: ..
-        target: /opt/kpireport
+        source: ./examples
+        target: /opt/kpireport/examples
+        read_only: True
+      - type: bind
+        source: ./_build
+        target: /opt/kpireport/_build
       - type: bind
         source: ${SCP_IDENTITY_FILE}
         target: /root/.ssh/id_rsa

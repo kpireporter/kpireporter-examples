@@ -6,7 +6,7 @@ PROJ="$DIR/.."
 
 # Allow overriding the name of the docker image to use in the compose env.
 export DOCKER_IMAGE="${DOCKER_IMAGE:-kpireporter/kpireporter}"
-export DOCKER_TAG="${DOCKER_TAG:-dev}"
+export DOCKER_TAG="${DOCKER_TAG:-edge}"
 export PYTHON_VERSION=${PYTHON_VERSION:-3.8}
 
 pushd "$DIR" >/dev/null
@@ -99,12 +99,15 @@ if [[ $REBUILD -eq 1 ]]; then
 fi
 
 log_step "Regenerating fixture data ..."
-tox -e examples
+python -m fixtures
 log "Done"
 
 log_step "Starting docker-compose stack ..."
 _dockercompose up "${stack_args[@]}"
 log "Done"
+
+log_step "Waiting for datasources to finish initializing ..."
+_dockercompose run waiter mysql:3306 -t 60
 
 log_step "Running command kpireporter" "${POSARGS[@]}" "..."
 _dockercompose run \
