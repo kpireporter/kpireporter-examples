@@ -63,6 +63,7 @@ log_and_run() {
 REBUILD=1
 WATCH=0
 SHELL=0
+BINARY=kpireport
 declare -a POSARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -79,6 +80,9 @@ while [[ $# -gt 0 ]]; do
     -h|--help)
       usage
       ;;
+    explorer)
+      BINARY=explorer
+      ;;
     *)
       POSARGS+=("$1")
       ;;
@@ -86,14 +90,12 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-if [[ ${#POSARGS[@]} -eq 0 && ! $SHELL -eq 1 ]]; then
-  usage
+mkdir -p "$PROJ/_build"
+if [ ! -f "$DIR/.env" ]; then
+  cp "$DIR/.env.sample" "$DIR/.env"
 fi
 
-mkdir -p "$PROJ/_build"
-touch "$DIR/.env"
-
-declare -a stack_args=(--quiet-pull -d --scale kpireport=0)
+declare -a stack_args=(--quiet-pull -d)
 if [[ $REBUILD -eq 1 ]]; then
   stack_args+=(--force-recreate)
 fi
@@ -109,9 +111,9 @@ log "Done"
 log_step "Waiting for datasources to finish initializing ..."
 _dockercompose run waiter mysql:3306 -t 60
 
-log_step "Running command kpireporter" "${POSARGS[@]}" "..."
-_dockercompose run \
+log_step "Running command '$BINARY ${POSARGS[@]}' ..."
+_dockercompose run --service-ports \
   -e KPIREPORT_USER="$(id -u)" \
   -e KPIREPORT_WATCH="$WATCH" \
   -e KPIREPORT_SHELL="$SHELL" \
-  kpireport "${POSARGS[@]}"
+  "$BINARY" "${POSARGS[@]}"
