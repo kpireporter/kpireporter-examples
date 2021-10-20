@@ -63,11 +63,13 @@ services:
       - "127.0.0.1:8080:80"
 
   waiter:
-    scale: 0
+    deploy:
+      replicas: 0
     image: willwill/wait-for-it
 
   kpireport:
-    scale: 0
+    deploy:
+      replicas: 0
     image: ${DOCKER_IMAGE}:${DOCKER_TAG}
     stdin_open: True
     tty: True
@@ -95,12 +97,15 @@ services:
       - smtp
 
   explorer:
-    scale: 0
+    deploy:
+      replicas: 0
     image: kpireporter/explorer:edge
     env_file: .env
     environment:
       FLASK_ENV: development
       KPIREPORT_PLUGINS: all
+      # See example below
+      # EXTRA_PLUGINS: /ext
     ports:
       - "5000:5000"
     volumes:
@@ -108,6 +113,11 @@ services:
         source: ./examples
         target: /opt/kpireport-explorer/examples
         read_only: True
+      # Example: mounting local extension
+      # - type: bind
+      #   source: path/to/extension
+      #   target: /ext
+      #   read_only: True
       - type: bind
         source: ./_build
         target: /opt/kpireport-explorer/_build

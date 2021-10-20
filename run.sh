@@ -105,7 +105,7 @@ python -m fixtures
 log "Done"
 
 log_step "Starting docker-compose stack ..."
-_dockercompose up "${stack_args[@]}"
+_dockercompose up "${stack_args[@]}" || true
 log "Done"
 
 log_step "Waiting for datasources to finish initializing ..."
